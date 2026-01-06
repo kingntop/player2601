@@ -1,6 +1,5 @@
 const VIDEO_CACHE_NAME = 'site-video-v4';
-// const COMPANY_ID_AUTH = '5CAE46D0460AFC9035AFE9AE32CD146539EDF83B';
-const COMPANY_ID_AUTH = '2085735F0B4CC74DF542A8A34B48844D4ABC7851';
+const COMPANY_ID_AUTH = '5CAE46D0460AFC9035AFE9AE32CD146539EDF83B';
 
 /**
  * 전달받은 deviceId 값이 유효할 경우 player 초기화
@@ -334,7 +333,7 @@ player.on('loadeddata', async function () {
           await axios.get(naverInfo.videoUrl); // 사전 로딩
           nextItem.sources[0].src = naverInfo.videoUrl;
           nextItem.reportUrl = naverInfo.reportUrl;
-          nextItem.report.HIVESTACK_URL = null;
+          nextItem.report.HIVESTACK_URL = naverInfo.videoUrl;
         } catch (error) {
           console.log('error on fetching naver url');
         }
@@ -694,7 +693,7 @@ async function addReport(currentItem) {
     .below(getFormattedDate(addMinutes(new Date(), -5)))
     .count();
 
-  if (oldDataCount > 0) {
+  if (oldDataCount > 0 || isHivestack === 'A') {
     try {
       await reportAll();
     } catch (error) {
@@ -794,7 +793,7 @@ function cronVideo(date, playlist, type) {
           await axios.get(naverInfo.videoUrl);
           context[0].sources[0].src = naverInfo.videoUrl;
           context[0].reportUrl = naverInfo.reportUrl;
-          context[0].report.HIVESTACK_URL = null;
+          context[0].report.HIVESTACK_URL = naverInfo.videoUrl;
         } catch (error) {
           console.log('error on fetching naver url');
         }
