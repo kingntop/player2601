@@ -203,18 +203,13 @@ const getUrlFromNaver = async (naverUrl, retry = 0) => {
   } else {
     naverInfo.success = true;
     naverInfo.videoUrl = media.textContent.trim();
-    naverInfo.reportUrl = null;
+    // naverInfo.reportUrl = null;
 
-    // Send GET requests to each Tracking URL and log the result (ignore failures)
-    for (let i = 0; i < trackingElements.length; i++) {
-      const trackingUrl = trackingElements.item(i).textContent.trim();
-      axios.get(trackingUrl)
-        .then(response => {
-          console.log(`Tracking URL called: ${trackingUrl}`, response.status);
-        })
-        .catch(error => {
-          console.log(`Tracking URL failed: ${trackingUrl}`, error.message);
-        });
+    if (trackingElements.length > 0) {
+      naverInfo.reportUrl = trackingElements.item(0).textContent.trim();
+      console.log(`[Naver Tracking] Set reportUrl to: ${naverInfo.reportUrl}`);
+    } else {
+      naverInfo.reportUrl = null;
     }
   }
 
@@ -752,7 +747,7 @@ const fileToPlaylistSrc = file => {
       HIVESTACK_YN: file.HIVESTACK_YN,
       URL_YN: file.URL_YN,
       DEVICE_URL: file.DEVICE_URL,
-      // HIVESTACK_URL: file.VIDEO_URL,
+      HIVESTACK_URL: null,
       PLAY_ON: null,
     },
   };

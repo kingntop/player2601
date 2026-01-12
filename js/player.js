@@ -333,7 +333,7 @@ player.on('loadeddata', async function () {
           await axios.get(naverInfo.videoUrl); // 사전 로딩
           nextItem.sources[0].src = naverInfo.videoUrl;
           nextItem.reportUrl = naverInfo.reportUrl;
-          nextItem.report.HIVESTACK_URL = naverInfo.videoUrl;
+          nextItem.report.HIVESTACK_URL = naverInfo.reportUrl;
         } catch (error) {
           console.log('error on fetching naver url');
         }
