@@ -191,11 +191,15 @@ const getUrlFromNaver = async (naverUrl, retry = 0) => {
     naverInfo.success = false;
     return naverInfo;
   }
+  console.log(`[Naver Tracking] Set URL to: ${NAVER_URL}`);
   const response = await axios.get(NAVER_URL);
+  console.log(`[Naver response] Set URL to: ${response}`);
 
   const $xml = $.parseXML(response.data);
   const media = $xml.getElementsByTagName('MediaFile').item(0);
   const trackingElements = $xml.getElementsByTagName('Tracking');
+  console.log(`[Naver media] Set Tracking to: ${media}`);
+  console.log(`[Naver trackingElements] Set Tracking to: ${trackingElements}`);
   if (!media) {
     naverInfo = await getUrlFromNaver(naverUrl, retry + 1);
   } else if (media.getAttribute('type') !== 'video/mp4') {
