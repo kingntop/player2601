@@ -326,6 +326,7 @@ player.on('loadeddata', async function () {
 
     // NAVER 광고 미리 요청
     if (nextItem.isHivestack === 'A') {
+      console.log('Git Page');
       const naverInfo = await getUrlFromNaver(nextItem.naverUrl);
       console.log('naverInfo', naverInfo);
       if (naverInfo.success) {
